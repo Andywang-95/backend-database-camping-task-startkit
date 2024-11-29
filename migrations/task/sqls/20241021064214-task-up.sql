@@ -206,14 +206,38 @@ values
         -- 2. 預約時間`booking_at` 設為2024-11-24 16:00:00
         -- 3. 狀態`status` 設定為即將授課
 
+insert into "COURSE_BOOKING"("user_id", "course_id", "booking_at", "status")
+values
+(
+(select id from "USER" where name = '王小明'),
+(select id from "COURSE" where user_id = (select id from "USER" where name = '李燕容')),
+('2024-11-24 16:00:00'),
+('即將授課')
+)
+
 -- 5-2. 修改：`王小明`取消預約 `李燕容` 的課程，請在`COURSE_BOOKING`更新該筆預約資料：
     -- 1. 取消預約時間`cancelled_at` 設為2024-11-24 17:00:00
     -- 2. 狀態`status` 設定為課程已取消
+
+update "COURSE_BOOKING"
+set cancelled_at = '2024-11-24 17:00:00', status = '課程取消'
+where user_id = (select id from "USER" where name = '王小明') 
+and course_id = (select id from "COURSE" where user_id = (select id from "USER" where name = '李燕容'))
+and status = '課程已取消'
 
 -- 5-3. 新增：`王小明`再次預約 `李燕容`   的課程，請在`COURSE_BOOKING`新增一筆資料：
     -- 1. 預約人設為`王小明`
     -- 2. 預約時間`booking_at` 設為2024-11-24 17:10:25
     -- 3. 狀態`status` 設定為即將授課
+
+insert into "COURSE_BOOKING"("user_id", "course_id", "booking_at", "status")
+values
+(
+(select id from "USER" where name = '王小明'),
+(select id from "COURSE" where user_id = (select id from "USER" where name = '李燕容')),
+('2024-11-24 17:10:25'),
+('即將授課')
+)
 
 -- 5-4. 查詢：取得王小明所有的預約紀錄，包含取消預約的紀錄
 
