@@ -341,25 +341,19 @@ group by "CREDIT_PACKAGE"."name";
 select 
 sum("CREDIT_PURCHASE".price_paid) as "總營收"
 from "CREDIT_PURCHASE"
-where purchase_at between '2024-11-1' and '2024-11-30';
+where purchase_at between '2024-11-1' and '2024-12-1';
 
 -- 6-5. 查詢：計算 11 月份有預約課程的會員人數（需使用 Distinct，並用 created_at 和 status 欄位統計）
 -- 顯示須包含以下欄位： 預約會員人數
 
 select 
-count(*) as "預約會員人數"
-from (
-select distinct user_id 
+count(distinct user_id) as "預約會員人數"
 from "COURSE_BOOKING"
-where status <> '課程已取消' and created_at between '2024-11-1' and '2024-12-1'
-);
+where status <> '課程已取消' and created_at between '2024-11-1' and '2024-12-1';
 
 -- 但是這一題感覺判斷cancelled_at欄位是否有值會比判斷status欄位的字串更好一些，只要篩選cancelled_at是NULL的就表示課程沒有被取消
 
 select 
-count(*) as "預約會員人數"
-from (
-select distinct user_id 
+count(distinct user_id) as "預約會員人數"
 from "COURSE_BOOKING"
-where cancelled_at is NULL and created_at between '2024-11-1' and '2024-12-1'
-);
+where cancelled_at is null and created_at between '2024-11-1' and '2024-12-1'
