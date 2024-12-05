@@ -213,7 +213,14 @@ values
 (select id from "COURSE" where user_id = (select id from "USER" where email = 'lee2000@hexschooltest.io')),
 ('2024-11-24 16:00:00'),
 ('即將授課')
-);
+),
+(
+(select id from "USER" where email = 'richman@hexschooltest.io'),
+(select id from "COURSE" where user_id = (select id from "USER" where email = 'lee2000@hexschooltest.io')),
+('2024-11-24 16:00:00'),
+('即將授課')
+)
+;
 
 -- 5-2. 修改：`王小明`取消預約 `李燕容` 的課程，請在`COURSE_BOOKING`更新該筆預約資料：
     -- 1. 取消預約時間`cancelled_at` 設為2024-11-24 17:00:00
